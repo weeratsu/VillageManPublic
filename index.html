@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VillageMan - Common-area Utility Report</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  :root{
+    --bg:#f4f6fb; --bg2:#eef1f8; --card:#ffffff; --text:#1f2430; --text3:#8a90a0;
+    --border:#e3e7f0; --border2:#d4d9e6; --primary:#2b6cff; --primary-bg:#e4ecff;
+    --error:#d64545; --error-bg:#fdecec; --success:#1f9d57; --planned:#6b7280; --planned-bg:#eceef2;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Segoe UI',Tahoma,'Sarabun',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:14px}
+  h2{font-size:16px;margin:0 0 8px} h3{margin:0}
+  .text-muted{color:var(--text3)} .text-error{color:var(--error)}
+  .r{text-align:right} .inp{padding:5px 8px;border:1px solid var(--border2);border-radius:7px;background:var(--card);color:var(--text);font-size:13px}
+  table.tbl{width:100%;border-collapse:collapse;font-size:12px}
+  table.tbl th,table.tbl td{padding:7px 9px;border-bottom:1px solid var(--border);text-align:left}
+  table.tbl th{color:var(--text3);font-weight:600;white-space:nowrap}
+  .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px}
+  .kpi{background:var(--bg2);border-radius:10px;padding:10px 12px}
+  .kpi-label{font-size:11px;color:var(--text3)} .kpi-val{font-size:18px;font-weight:700}
+  .tag{display:inline-block;padding:1px 7px;border-radius:20px;font-size:9px;font-weight:600}
+  .tag-active{background:#e6f6ec;color:var(--success)} .tag-planned{background:var(--planned-bg);color:var(--planned)}
+  .lnk{background:none;border:0;cursor:pointer;color:var(--primary);padding:0}
+  .foot{text-align:center;color:var(--text3);font-size:11px;padding:10px 0 24px}
+  @media(prefers-color-scheme:dark){
+    :root{--bg:#15181f;--bg2:#1d212b;--card:#1b1f29;--text:#e6e9f0;--text3:#8a90a0;--border:#2a2f3b;--border2:#39404f;--primary:#5b8cff;--primary-bg:#223052;--error:#ef6a6a;--error-bg:#3a2222;--success:#43c07a;--planned:#9aa2b2;--planned-bg:#272c38;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div id="pub-root"><div class="card"><p class="text-muted">Loading...</p></div></div>
+  <div class="foot">VillageMan - Common-area Utility Report &middot; read-only</div>
+</div>
+<!-- data snapshot exported from the VillageMan app (push a fresh villageman_data.js to update) -->
+<script src="villageman_data.js?v=1"></script>
+<script src="pubreport.js?v=1"></script>
+</body>
+</html>
