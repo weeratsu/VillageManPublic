@@ -8,7 +8,8 @@
 function fmtMoney(n){ var v=Number(n)||0; return '\u0e3f'+v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}); }
 function fmtDate(iso){ if(!iso) return ''; var p=String(iso).split('-'); if(p.length!==3) return iso; return p[2]+'/'+p[1]+'/'+p[0]; }
 function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
-var U={ fmtMoney:fmtMoney, fmtDate:fmtDate, esc:esc };
+function fmtRate(n){ var v=Number(n)||0; return v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:4}); }
+var U={ fmtMoney:fmtMoney, fmtDate:fmtDate, esc:esc, fmtRate:fmtRate };
 
 function _data(){ return (window.VILLAGEMAN_DATA && typeof window.VILLAGEMAN_DATA==='object') ? window.VILLAGEMAN_DATA : {meters:[],utility_bills:[]}; }
 
@@ -57,9 +58,11 @@ function _calcSteps(b){
   var dash='<span class="text-muted">-</span>', h='';
   h+=S(1,'\u0e04\u0e48\u0e32\u0e1e\u0e25\u0e31\u0e07\u0e07\u0e32\u0e19\u0e23\u0e27\u0e21 (energy) \u00f7 \u0e2b\u0e19\u0e48\u0e27\u0e22\u0e23\u0e27\u0e21', (energyTot!=null?U.fmtMoney(energyTot):dash)+' \u00f7 '+(mainUnits?Math.round(mainUnits):dash));
   h+=S(2,'= \u0e23\u0e32\u0e04\u0e32\u0e15\u0e48\u0e2d\u0e2b\u0e19\u0e48\u0e27\u0e22', (ratePerUnit!=null?U.fmtMoney(ratePerUnit):dash));
-  h+=S(3,'\u00d7 \u0e2b\u0e19\u0e48\u0e27\u0e22\u0e2a\u0e48\u0e27\u0e19\u0e01\u0e25\u0e32\u0e07 ('+Math.round(cu)+')', (ce!=null?U.fmtMoney(ce):dash));
-  h+=S(4,'+ Ft (\u0e2a\u0e48\u0e27\u0e19\u0e01\u0e25\u0e32\u0e07)', (cf!=null?U.fmtMoney(cf):dash));
-  h+=S(5,'+ VAT 7%', (cv!=null?U.fmtMoney(cv):dash));
+  var ftRate=(cf!=null && cu>0)?(cf/cu):null;
+  var preVat=((ce!=null?ce:0)+(cf!=null?cf:0));
+  h+=S(3,'\u00d7 \u0e2b\u0e19\u0e48\u0e27\u0e22\u0e2a\u0e48\u0e27\u0e19\u0e01\u0e25\u0e32\u0e07 ('+Math.round(cu)+')', (ce!=null?('<span class="text-muted" style="font-size:10px">('+(ratePerUnit!=null?U.fmtMoney(ratePerUnit):dash)+' \u00d7 '+Math.round(cu)+') = </span>'+U.fmtMoney(ce)):dash));
+  h+=S(4,'+ Ft (\u0e2a\u0e48\u0e27\u0e19\u0e01\u0e25\u0e32\u0e07)', (cf!=null?('<span class="text-muted" style="font-size:10px">('+(ftRate!=null?U.fmtRate(ftRate):dash)+' \u00d7 '+Math.round(cu)+') = </span>'+U.fmtMoney(cf)):dash));
+  h+=S(5,'+ VAT 7%', (cv!=null?('<span class="text-muted" style="font-size:10px">('+U.fmtMoney(preVat)+' \u00d7 7%) = </span>'+U.fmtMoney(cv)):dash));
   h+=S(6,'<b>= \u0e22\u0e2d\u0e14\u0e2a\u0e48\u0e27\u0e19\u0e01\u0e25\u0e32\u0e07\u0e17\u0e35\u0e48\u0e15\u0e49\u0e2d\u0e07\u0e40\u0e01\u0e47\u0e1a</b>', '<b>'+U.fmtMoney(ca)+'</b>');
   h+='<div style="font-size:9px;color:var(--text3);margin-top:4px">* \u0e04\u0e48\u0e32\u0e1a\u0e23\u0e34\u0e01\u0e32\u0e23\u0e44\u0e21\u0e48\u0e23\u0e27\u0e21\u0e43\u0e19\u0e2a\u0e48\u0e27\u0e19\u0e01\u0e25\u0e32\u0e07 (\u0e40\u0e1b\u0e47\u0e19\u0e04\u0e48\u0e32\u0e21\u0e34\u0e40\u0e15\u0e2d\u0e23\u0e4c\u0e02\u0e2d\u0e07\u0e1a\u0e49\u0e32\u0e19)</div>';
   return h;
