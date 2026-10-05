@@ -1,5 +1,5 @@
 window.VILLAGEMAN_DATA = {
- "generated_at": "2026-10-04T09:37:07.448Z",
+ "generated_at": "2026-10-05T09:39:48.409Z",
  "estate_name": "Cluster Haus",
  "meters": [
   {
@@ -52,7 +52,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 13.09,
    "central_amount": 200.04,
    "home_units": 527,
-   "home_amount": 2269.31
+   "home_amount": 2269.31,
+   "meter_photo_rel": "meter-photos/electricity/2026/9788192_2026-09.jpg"
   },
   {
    "id": "idmuthp8lkglrd6",
@@ -80,7 +81,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2023/68221246_2023-05.jpg"
   },
   {
    "id": "idmuthp8loarabp",
@@ -108,7 +110,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2023/68221246_2023-06.jpg"
   },
   {
    "id": "idmuthp8lrz80tl",
@@ -136,7 +139,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2023/68221246_2023-07.jpg"
   },
   {
    "id": "idmuthp8lulqjq5",
@@ -164,7 +168,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2023/68221246_2023-08.jpg"
   },
   {
    "id": "idmuthp8lxxyvil",
@@ -192,7 +197,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2023/68221246_2023-09.jpg"
   },
   {
    "id": "idmuthp8lzz8dmc",
@@ -220,7 +226,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2023/68221246_2023-10.jpg"
   },
   {
    "id": "idmuthp8m1fdk4y",
@@ -248,7 +255,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2023/68221246_2023-11.jpg"
   },
   {
    "id": "idmuthp8m5udw4a",
@@ -276,7 +284,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2023/68221246_2023-12.jpg"
   },
   {
    "id": "idmuthp8m9eblve",
@@ -304,7 +313,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2024/68221246_2024-01.jpg"
   },
   {
    "id": "idmuthp8mbnppp5",
@@ -332,7 +342,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2024/68221246_2024-02.jpg"
   },
   {
    "id": "idmuthp8mfvoyln",
@@ -360,7 +371,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2024/68221246_2024-03.jpg"
   },
   {
    "id": "idmuthp8mimhk76",
@@ -388,7 +400,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2024/68221246_2024-04.jpg"
   },
   {
    "id": "idmuthp8mm56ojf",
@@ -416,7 +429,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2024/68221246_2024-05.jpg"
   },
   {
    "id": "idmuthp8moh8kx9",
@@ -444,7 +458,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2024/68221246_2024-06.jpg"
   },
   {
    "id": "idmuthp8mrm4ojl",
@@ -472,7 +487,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2024/68221246_2024-07.jpg"
   },
   {
    "id": "idmuthp8mudznq8",
@@ -500,7 +516,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2024/68221246_2024-08.jpg"
   },
   {
    "id": "idmuthp8mx1luvj",
@@ -528,7 +545,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2024/68221246_2024-09.jpg"
   },
   {
    "id": "idmuthp8n2cgk5o",
@@ -556,7 +574,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2024/68221246_2024-10.jpg"
   },
   {
    "id": "idmuthp8n5ou6cp",
@@ -584,7 +603,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2024/68221246_2024-11.jpg"
   },
   {
    "id": "idmuthp8n8c1sig",
@@ -612,7 +632,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2024/68221246_2024-12.jpg"
   },
   {
    "id": "idmuthp8nbxzrl7",
@@ -640,7 +661,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2025/68221246_2025-01.jpg"
   },
   {
    "id": "idmuthp8nerwhdj",
@@ -668,7 +690,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2025/68221246_2025-02.jpg"
   },
   {
    "id": "idmuthp8nhswzxl",
@@ -696,7 +719,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2025/68221246_2025-03.jpg"
   },
   {
    "id": "idmuthp8njavafi",
@@ -724,7 +748,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2025/68221246_2025-04.jpg"
   },
   {
    "id": "idmuthp8nmgalkx",
@@ -752,7 +777,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2025/68221246_2025-05.jpg"
   },
   {
    "id": "idmuthp8nowpzmw",
@@ -780,7 +806,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2025/68221246_2025-06.jpg"
   },
   {
    "id": "idmuthp8nrvpucm",
@@ -808,7 +835,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2025/68221246_2025-07.jpg"
   },
   {
    "id": "idmuthp8ntxo2mg",
@@ -836,7 +864,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2025/68221246_2025-08.jpg"
   },
   {
    "id": "idmuthp8nwtl8p5",
@@ -864,7 +893,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2025/68221246_2025-09.jpg"
   },
   {
    "id": "idmuthp8nypfwkw",
@@ -892,7 +922,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2025/68221246_2025-10.jpg"
   },
   {
    "id": "idmuthp8o0lfqyz",
@@ -920,7 +951,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2025/68221246_2025-11.jpg"
   },
   {
    "id": "idmuthp8o31vi90",
@@ -948,7 +980,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2025/68221246_2025-12.jpg"
   },
   {
    "id": "idmuthp8o5qge8u",
@@ -976,7 +1009,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2026/68221246_2026-01.jpg"
   },
   {
    "id": "idmuthp8o8h5ybl",
@@ -1004,7 +1038,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2026/68221246_2026-02.jpg"
   },
   {
    "id": "idmuthp8ob5qm20",
@@ -1032,7 +1067,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2026/68221246_2026-03.jpg"
   },
   {
    "id": "idmuthp8oebn788",
@@ -1060,7 +1096,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2026/68221246_2026-04.jpg"
   },
   {
    "id": "idmuthp8oht7j26",
@@ -1088,7 +1125,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2026/68221246_2026-05.jpg"
   },
   {
    "id": "idmuthp8ojnsvl4",
@@ -1116,7 +1154,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2026/68221246_2026-06.jpg"
   },
   {
    "id": "idmuthp8omkxmgo",
@@ -1144,7 +1183,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2026/68221246_2026-07.jpg"
   },
   {
    "id": "idmuthp8opzfyon",
@@ -1172,7 +1212,8 @@ window.VILLAGEMAN_DATA = {
    "central_vat": 0,
    "central_amount": 0,
    "home_units": 0,
-   "home_amount": 0
+   "home_amount": 0,
+   "meter_photo_rel": "meter-photos/electricity/2026/68221246_2026-08.jpg"
   }
  ]
 };

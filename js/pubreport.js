@@ -100,9 +100,13 @@ function renderPubReport(){
       +'<td class="r">'+(energy!=null?U.fmtMoney(energy):dash)+'</td><td class="r">'+(vat!=null?U.fmtMoney(vat):dash)+'</td>'
       +'<td class="r"><b>'+U.fmtMoney(central)+'</b></td>'
       +'<td class="r">'+(b.paid?'<span class="tag tag-active">\u0e08\u0e48\u0e32\u0e22\u0e41\u0e25\u0e49\u0e27</span>':'<span class="tag tag-planned">\u0e22\u0e31\u0e07\u0e44\u0e21\u0e48\u0e08\u0e48\u0e32\u0e22</span>')+(b.paid&&b.paid_date?('<div style="font-size:8px;color:var(--text3);margin-top:2px">'+U.fmtDate(b.paid_date)+'</div>'):'')+'</td>'
+      +'<td class="r">'+(function(){
+        var src=b.meter_photo_rel||''; if(!src) return dash;
+        return '<a href="#" onclick="pubViewMedia(this.getAttribute(\'data-src\'),event);return false;" data-src="'+U.esc(src)+'" title="'+U.esc(src)+'"><i class="fa-solid fa-camera text-primary"></i></a>';
+      })()+'</td>'
       +'</tr>';
     if(isSplit){
-      r+='<tr class="pub-detail" id="pd-'+b.id+'" style="display:none;background:var(--bg2)"><td colspan="10" style="padding:10px 14px;font-size:11px;line-height:1.6">'
+      r+='<tr class="pub-detail" id="pd-'+b.id+'" style="display:none;background:var(--bg2)"><td colspan="11" style="padding:10px 14px;font-size:11px;line-height:1.6">'
         +'<div style="font-weight:700;margin-bottom:4px"><i class="fa-solid fa-calculator"></i> \u0e27\u0e34\u0e18\u0e35\u0e04\u0e34\u0e14\u0e22\u0e2d\u0e14\u0e2a\u0e48\u0e27\u0e19\u0e01\u0e25\u0e32\u0e07 ('+U.esc(b.period||'')+')</div>'
         +'<div style="max-width:460px">'+_calcSteps(b)+'</div>'
         +'<div style="margin-top:6px;font-size:10px;color:var(--text3)">\u0e2b\u0e19\u0e48\u0e27\u0e22\u0e23\u0e27\u0e21\u0e17\u0e31\u0e49\u0e07\u0e1a\u0e34\u0e25 '+Math.round(Number(b.units_used)||0)+' \u2014 \u0e2a\u0e48\u0e27\u0e19\u0e01\u0e25\u0e32\u0e07 '+Math.round(Number(b.central_units)||0)+' / \u0e1a\u0e49\u0e32\u0e19 '+Math.round(Number(b.home_units)||0)+'</div>'
@@ -112,7 +116,7 @@ function renderPubReport(){
   }).join('');
   var head='<table class="tbl"><thead><tr>'
     +'<th style="cursor:pointer" onclick="setPubSort(\'period\')">\u0e07\u0e27\u0e14'+_pubArrow('period')+'</th><th>\u0e1b\u0e23\u0e30\u0e40\u0e20\u0e17</th><th style="cursor:pointer" onclick="setPubSort(\'meter\')">\u0e40\u0e25\u0e02\u0e21\u0e34\u0e40\u0e15\u0e2d\u0e23\u0e4c'+_pubArrow('meter')+'</th>'
-    +'<th class="r" style="cursor:pointer" onclick="setPubSort(\'prev\')">\u0e40\u0e25\u0e02\u0e40\u0e01\u0e48\u0e32'+_pubArrow('prev')+'</th><th class="r" style="cursor:pointer" onclick="setPubSort(\'pres\')">\u0e40\u0e25\u0e02\u0e43\u0e2b\u0e21\u0e48'+_pubArrow('pres')+'</th><th class="r" style="cursor:pointer" onclick="setPubSort(\'units\')">\u0e2b\u0e19\u0e48\u0e27\u0e22'+_pubArrow('units')+'</th><th class="r" style="cursor:pointer" onclick="setPubSort(\'energy\')">\u0e04\u0e48\u0e32\u0e1e\u0e25\u0e31\u0e07\u0e07\u0e32\u0e19'+_pubArrow('energy')+'</th><th class="r" style="cursor:pointer" onclick="setPubSort(\'vat\')">VAT'+_pubArrow('vat')+'</th><th class="r" style="cursor:pointer" onclick="setPubSort(\'total\')">\u0e23\u0e27\u0e21(\u0e2a\u0e48\u0e27\u0e19\u0e01\u0e25\u0e32\u0e07)'+_pubArrow('total')+'</th><th class="r" style="cursor:pointer" onclick="setPubSort(\'status\')">\u0e2a\u0e16\u0e32\u0e19\u0e30'+_pubArrow('status')+'</th>'
+    +'<th class="r" style="cursor:pointer" onclick="setPubSort(\'prev\')">\u0e40\u0e25\u0e02\u0e40\u0e01\u0e48\u0e32'+_pubArrow('prev')+'</th><th class="r" style="cursor:pointer" onclick="setPubSort(\'pres\')">\u0e40\u0e25\u0e02\u0e43\u0e2b\u0e21\u0e48'+_pubArrow('pres')+'</th><th class="r" style="cursor:pointer" onclick="setPubSort(\'units\')">\u0e2b\u0e19\u0e48\u0e27\u0e22'+_pubArrow('units')+'</th><th class="r" style="cursor:pointer" onclick="setPubSort(\'energy\')">\u0e04\u0e48\u0e32\u0e1e\u0e25\u0e31\u0e07\u0e07\u0e32\u0e19'+_pubArrow('energy')+'</th><th class="r" style="cursor:pointer" onclick="setPubSort(\'vat\')">VAT'+_pubArrow('vat')+'</th><th class="r" style="cursor:pointer" onclick="setPubSort(\'total\')">\u0e23\u0e27\u0e21(\u0e2a\u0e48\u0e27\u0e19\u0e01\u0e25\u0e32\u0e07)'+_pubArrow('total')+'</th><th class="r" style="cursor:pointer" onclick="setPubSort(\'status\')">\u0e2a\u0e16\u0e32\u0e19\u0e30'+_pubArrow('status')+'</th>'+'<th class="r">\u0e23\u0e39\u0e1b</th>'
     +'</tr></thead><tbody>'+rows+'</tbody></table>';
   var tbl=sorted.length?('<div class="table-scroll">'+head+'</div>'):'<p class="text-muted" style="padding:10px">\u0e22\u0e31\u0e07\u0e44\u0e21\u0e48\u0e21\u0e35\u0e1a\u0e34\u0e25\u0e43\u0e19\u0e1b\u0e35\u0e19\u0e35\u0e49</p>';
   var genNote = D.generated_at ? ('<div style="font-size:10px;color:var(--text3);text-align:right">\u0e02\u0e49\u0e2d\u0e21\u0e39\u0e25 \u0e13 '+U.esc(String(D.generated_at).slice(0,10))+'</div>') : '';
@@ -131,9 +135,70 @@ function renderPubReport(){
 }
 function pubToggle(id){ var row=document.getElementById('pd-'+id), ic=document.getElementById('pc-'+id); if(!row) return; var open=row.style.display!=='none'; row.style.display=open?'none':''; if(ic) ic.className='fa-solid '+(open?'fa-caret-right':'fa-caret-down'); }
 
+/* Floating lightbox for meter photos. Shows the image; reads EXIF capture date if present. */
+function pubViewMedia(src, ev){
+  if(ev && ev.preventDefault) ev.preventDefault();
+  if(!src) return;
+  var isPdf=/\.pdf(\?|$)/i.test(src);
+  var ov=document.getElementById('pub-media-ov');
+  if(!ov){
+    ov=document.createElement('div'); ov.id='pub-media-ov';
+    ov.style.cssText='position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.8);display:flex;align-items:center;justify-content:center;padding:24px';
+    ov.addEventListener('click',function(e){ if(e.target===ov) pubCloseMedia(); });
+    document.body.appendChild(ov);
+  }
+  var inner=isPdf
+    ? '<iframe src="'+U.esc(src)+'" style="width:88vw;height:88vh;border:0;background:#fff;border-radius:8px"></iframe>'
+    : '<img src="'+U.esc(src)+'" style="max-width:92vw;max-height:92vh;border-radius:8px;box-shadow:0 8px 40px rgba(0,0,0,.5)" onerror="this.outerHTML=\'<div style=&quot;color:#fff;padding:20px;background:#333;border-radius:8px&quot;>\\u0e40\\u0e1b\\u0e34\\u0e14\\u0e23\\u0e39\\u0e1b\\u0e44\\u0e21\\u0e48\\u0e44\\u0e14\\u0e49</div>\'">';
+  ov.innerHTML='<div style="position:relative">'
+    + '<button onclick="pubCloseMedia()" style="position:absolute;top:-14px;right:-14px;width:32px;height:32px;border-radius:50%;border:0;background:#fff;color:#111;font-size:16px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.4)">&times;</button>'
+    + inner
+    + '<div id="pub-media-exif" style="margin-top:8px;text-align:center;color:#fff;font-size:11px;opacity:.9;min-height:14px"></div>'
+    + '<div style="margin-top:4px;text-align:center"><a href="'+U.esc(src)+'" target="_blank" style="color:#fff;font-size:11px;opacity:.85">\u0e40\u0e1b\u0e34\u0e14\u0e43\u0e19\u0e41\u0e17\u0e47\u0e1a\u0e43\u0e2b\u0e21\u0e48</a></div>'
+    + '</div>';
+  ov.style.display='flex';
+  if(!isPdf){ _showExifDate(src); }
+}
+function pubCloseMedia(){ var ov=document.getElementById('pub-media-ov'); if(ov){ ov.style.display='none'; ov.innerHTML=''; } }
+/* Read EXIF DateTimeOriginal from a JPEG and show it; silent if blocked (file://) or absent. */
+function _showExifDate(src){
+  try{
+    fetch(src).then(function(r){ return r.arrayBuffer(); }).then(function(buf){
+      var dt=_parseExifDateTime(new DataView(buf)); if(!dt) return;
+      var el=document.getElementById('pub-media-exif'); if(el) el.innerHTML='<i class="fa-solid fa-camera"></i> \u0e16\u0e48\u0e32\u0e22\u0e40\u0e21\u0e37\u0e48\u0e2d '+U.esc(dt);
+    }).catch(function(){});
+  }catch(e){}
+}
+function _parseExifDateTime(dv){
+  try{
+    if(dv.getUint16(0)!==0xFFD8) return '';
+    var off=2, len=dv.byteLength;
+    while(off+4<len){
+      if(dv.getUint16(off)!==0xFFE1){ if(dv.getUint8(off)!==0xFF) return ''; off+=2+dv.getUint16(off+2); continue; }
+      var base=off+4; if(dv.getUint32(base)!==0x45786966) return '';
+      var tiff=base+6, little=(dv.getUint16(tiff)===0x4949);
+      var g16=function(o){ return dv.getUint16(o,little); }, g32=function(o){ return dv.getUint32(o,little); };
+      var ifd0=tiff+g32(tiff+4), n=g16(ifd0), exifIFD=0;
+      for(var i=0;i<n;i++){ var e=ifd0+2+i*12; if(g16(e)===0x8769){ exifIFD=tiff+g32(e+8); break; } }
+      if(!exifIFD) return '';
+      var m=g16(exifIFD);
+      for(var j=0;j<m;j++){
+        var en=exifIFD+2+j*12;
+        if(g16(en)===0x9003){ var cnt=g32(en+4), vo=(cnt>4)?(tiff+g32(en+8)):(en+8), s='';
+          for(var k=0;k<cnt-1;k++){ var ch=dv.getUint8(vo+k); if(ch) s+=String.fromCharCode(ch); }
+          var mo=s.match(/(\d{4}):(\d{2}):(\d{2})\s+(\d{2}):(\d{2})/); if(mo) return mo[3]+'/'+mo[2]+'/'+mo[1]+' '+mo[4]+':'+mo[5]; return '';
+        }
+      }
+      return '';
+    }
+  }catch(e){ return ''; }
+  return '';
+}
 window.renderPubReport=renderPubReport;
 window.setPubYear=setPubYear;
 window.setPubSort=setPubSort;
 window.pubToggle=pubToggle;
+window.pubViewMedia=pubViewMedia;
+window.pubCloseMedia=pubCloseMedia;
 document.addEventListener('DOMContentLoaded', function(){ try{ renderPubReport(); }catch(e){ var el=document.getElementById('pub-root'); if(el) el.innerHTML='<div class="card"><p class="text-muted">\u0e42\u0e2b\u0e25\u0e14\u0e02\u0e49\u0e2d\u0e21\u0e39\u0e25\u0e44\u0e21\u0e48\u0e2a\u0e33\u0e40\u0e23\u0e47\u0e08: '+(e&&e.message?e.message:e)+'</p></div>'; } });
 })();
