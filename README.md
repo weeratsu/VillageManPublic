@@ -30,11 +30,10 @@ VillageManPublic/
 1. Open the **VillageMan** app on your PC -> **Common-area Summary** page.
 2. Click **"Export for web"** -> downloads `villageman_data.js`.
 3. Replace this repo's `villageman_data.js` (at the repo root) with the downloaded file.
-4. Run the photo-copy script (copies the referenced meter photos into `meter-photos/`):
-   ```
-   python scripts/copy_photos_to_public.py
-   ```
-5. Commit & push the whole folder (GitHub Desktop). GitHub Pages updates in ~1 minute.
+4. Double-click **`update_public.bat`** -> copies the referenced meter photos into
+   `meter-photos/`, then commits & pushes to GitHub automatically.
+   (Or do it by hand: `python scripts/copy_photos_to_public.py` then commit & push.)
+5. GitHub Pages updates in ~1 minute.
 
 ## Notes
 - Meter photos ARE shown here (they are just meter-dial photos, no personal data).

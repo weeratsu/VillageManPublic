@@ -157,9 +157,18 @@ function pubViewMedia(src, ev){
     + '<div style="margin-top:4px;text-align:center"><a href="'+U.esc(src)+'" target="_blank" style="color:#fff;font-size:11px;opacity:.85">\u0e40\u0e1b\u0e34\u0e14\u0e43\u0e19\u0e41\u0e17\u0e47\u0e1a\u0e43\u0e2b\u0e21\u0e48</a></div>'
     + '</div>';
   ov.style.display='flex';
-  if(!isPdf){ _showExifDate(src); }
+  if(!isPdf){
+    var fnDate=_dateFromName(src);
+    if(fnDate){ var el=document.getElementById('pub-media-exif'); if(el) el.innerHTML='<i class="fa-solid fa-camera"></i> \u0e16\u0e48\u0e32\u0e22\u0e40\u0e21\u0e37\u0e48\u0e2d '+U.esc(fnDate); }
+    else { _showExifDate(src); }
+  }
 }
 function pubCloseMedia(){ var ov=document.getElementById('pub-media-ov'); if(ov){ ov.style.display='none'; ov.innerHTML=''; } }
+/* Parse shot date from filename <meterNo>_<YYYY-MM>_<YYYY-MM-DD>.<ext> -> dd/mm/yyyy (no fetch). */
+function _dateFromName(src){
+  try{ var fn=String(src).split('/').pop().split('?')[0]; var m=fn.match(/_(\d{4})-(\d{2})-(\d{2})(?:_\d+)?\.[a-z]+$/i); if(m) return m[3]+'/'+m[2]+'/'+m[1]; }catch(e){}
+  return '';
+}
 /* Read EXIF DateTimeOriginal from a JPEG and show it; silent if blocked (file://) or absent. */
 function _showExifDate(src){
   try{

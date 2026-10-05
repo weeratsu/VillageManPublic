@@ -1,5 +1,5 @@
 window.VILLAGEMAN_DATA = {
- "generated_at": "2026-10-05T09:39:48.409Z",
+ "generated_at": "2026-10-05T10:51:40.618Z",
  "estate_name": "Cluster Haus",
  "meters": [
   {
@@ -53,7 +53,7 @@ window.VILLAGEMAN_DATA = {
    "central_amount": 200.04,
    "home_units": 527,
    "home_amount": 2269.31,
-   "meter_photo_rel": "meter-photos/electricity/2026/9788192_2026-09.jpg"
+   "meter_photo_rel": "meter-photos/electricity/2026/9788192_2026-09_2026-10-03.jpg"
   },
   {
    "id": "idmuthp8lkglrd6",
