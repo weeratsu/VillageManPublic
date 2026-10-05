@@ -31,8 +31,8 @@
   .tag-active{background:#e6f6ec;color:var(--success)} .tag-planned{background:var(--planned-bg);color:var(--planned)}
   .lnk{background:none;border:0;cursor:pointer;color:var(--primary);padding:0}
   .foot{text-align:center;color:var(--text3);font-size:11px;padding:10px 0 24px}
-  /* Horizontal scroll for wide tables on narrow screens (phones). */
-  .card{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  /* Scroll ONLY the table (not the whole card) when it is wider than the screen. */
+  .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -4px}
   @media(max-width:640px){
     .wrap{padding:10px}
     .card{padding:12px}
