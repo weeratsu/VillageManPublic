@@ -7,6 +7,32 @@ REM  replace villageman_data.js in this folder.
 REM ============================================================
 cd /d "%~dp0"
 
+REM ---- Locate git.exe --------------------------------------------------
+REM Order: (1) git already on PATH, (2) git bundled inside GitHub Desktop,
+REM (3) a standalone "Git for Windows" install. GitHub Desktop ships its own
+REM git under app-<version>\resources\app\git\cmd\git.exe (the app folder name
+REM changes every update, so we loop to find the newest one).
+set "GIT="
+
+where git >nul 2>nul
+if %errorlevel%==0 set "GIT=git"
+
+if not defined GIT (
+  for /d %%D in ("%LocalAppData%\GitHubDesktop\app-*") do (
+    if exist "%%D\resources\app\git\cmd\git.exe" set "GIT=%%D\resources\app\git\cmd\git.exe"
+  )
+)
+
+if not defined GIT (
+  if exist "%ProgramFiles%\Git\cmd\git.exe" set "GIT=%ProgramFiles%\Git\cmd\git.exe"
+)
+if not defined GIT (
+  if exist "%ProgramFiles(x86)%\Git\cmd\git.exe" set "GIT=%ProgramFiles(x86)%\Git\cmd\git.exe"
+)
+
+if not defined GIT goto :nogit
+echo Using git: %GIT%
+
 echo.
 echo [1/3] Copying referenced meter photos into the repo...
 python scripts\copy_photos_to_public.py
@@ -14,18 +40,18 @@ if errorlevel 1 goto :error
 
 echo.
 echo [2/3] Staging changes...
-git add -A
+"%GIT%" add -A
 
 echo.
 echo [3/3] Commit + push to GitHub...
 REM commit; if nothing changed, git returns non-zero -> skip push gracefully
-git commit -m "Update common-area report data + meter photos (%DATE% %TIME%)"
+"%GIT%" commit -m "Update common-area report data + meter photos (%DATE% %TIME%)"
 if errorlevel 1 (
   echo.
   echo    Nothing to commit ^(no changes since last push^) - skipping push.
   goto :done
 )
-git push
+"%GIT%" push
 if errorlevel 1 goto :pushfail
 
 echo.
@@ -47,6 +73,21 @@ echo ============================================================
 echo.
 echo Press any key to close...
 pause >nul
+goto :eof
+
+:nogit
+echo.
+echo ============================================================
+echo   [!] git.exe NOT FOUND.
+echo   Checked: PATH, GitHub Desktop (%LocalAppData%\GitHubDesktop),
+echo   and C:\Program Files\Git.
+echo.
+echo   Fix: install "Git for Windows" from https://git-scm.com/download/win
+echo   (choose "Git from the command line..."), OR open GitHub Desktop
+echo   and push from there instead.
+echo ============================================================
+echo.
+pause
 goto :eof
 
 :pushfail
