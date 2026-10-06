@@ -2,8 +2,9 @@
 REM ============================================================
 REM  update_public.bat  (VillageManPublic)
 REM  One-click: copy meter photos into this repo, then push to GitHub.
-REM  Run AFTER you press "Export for web" in the VillageMan app and
-REM  replace villageman_data.js in this folder.
+REM  No Export needed: bill numbers come live from the Google Sheet;
+REM  this only publishes new meter photos + photo_index.js.
+REM  Safe to run from Task Scheduler (no prompts when it succeeds).
 REM ============================================================
 cd /d "%~dp0.."
 
@@ -34,7 +35,7 @@ if not defined GIT goto :nogit
 echo Using git: %GIT%
 
 echo.
-echo [1/3] Copying referenced meter photos into the repo...
+echo [1/3] Copying meter photos + photo index into the repo...
 python scripts\copy_photos_to_public.py
 if errorlevel 1 goto :error
 
@@ -45,7 +46,7 @@ echo [2/3] Staging changes...
 echo.
 echo [3/3] Commit + push to GitHub...
 REM commit; if nothing changed, git returns non-zero -> skip push gracefully
-"%GIT%" commit -m "Update common-area report data + meter photos (%DATE% %TIME%)"
+"%GIT%" commit -m "Update meter photos (%DATE% %TIME%)"
 if errorlevel 1 (
   echo.
   echo    Nothing to commit ^(no changes since last push^) - skipping push.
@@ -110,7 +111,7 @@ echo ============================================================
 echo   [!] Step failed before push (photo copy or git add).
 echo   Check the message above.
 echo   Common causes: not a git repo yet, Python not installed,
-echo   or villageman_data.js missing.
+echo   or the VillageMan\meter-photos folder was not found.
 echo ============================================================
 echo.
 pause

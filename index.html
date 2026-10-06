@@ -52,6 +52,8 @@
 </div>
 <!-- data snapshot exported from the VillageMan app (push a fresh villageman_data.js to update) -->
 <script src="villageman_data.js?v=1"></script>
-<script src="js/pubreport.js?v=4"></script>
+<!-- meter photo index (copied from the app by copy_photos_to_public.py). Optional: page works without it. -->
+<script>document.write('<script src="meter-photos/photo_index.js?t='+Date.now()+'" onerror="window.VM_PHOTO_INDEX=window.VM_PHOTO_INDEX||null"><\/script>');</script>
+<script src="js/pubreport.js?v=5"></script>
 </body>
 </html>

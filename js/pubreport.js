@@ -68,6 +68,22 @@ function _calcSteps(b){
   return h;
 }
 
+/* Meter photo for a bill: look it up in meter-photos/photo_index.js (written by the organizer,
+   copied here by copy_photos_to_public.py), keyed <cat>/<year>/<meterNo>_<period>; fall back to
+   the snapshot's meter_photo_rel. Works for new periods without any "Export for web". */
+function _photoFor(b, meterById){
+  var idx=window.VM_PHOTO_INDEX, period=b.period||'';
+  if(idx && period){
+    var m=(meterById||{})[b.meter_id]||{};
+    var no=String(b.central_meter_no||m.installation||m.meter_no||m.ca_no||'');
+    var t=String(b.utility_type||m.utility_type||'').toLowerCase();
+    var cat=(t.indexOf('w')===0||t.indexOf('water')>=0)?'water':'electricity';
+    var key=cat+'/'+period.split('-')[0]+'/'+no+'_'+period;
+    if(no && idx[key] && idx[key].file) return 'meter-photos/'+idx[key].file;
+  }
+  return b.meter_photo_rel||'';
+}
+
 function renderPubReport(){
   var el=document.getElementById('pub-root'); if(!el) return;
   var D=_data();
@@ -101,7 +117,7 @@ function renderPubReport(){
       +'<td class="r"><b>'+U.fmtMoney(central)+'</b></td>'
       +'<td class="r">'+(b.paid?'<span class="tag tag-active">\u0e08\u0e48\u0e32\u0e22\u0e41\u0e25\u0e49\u0e27</span>':'<span class="tag tag-planned">\u0e22\u0e31\u0e07\u0e44\u0e21\u0e48\u0e08\u0e48\u0e32\u0e22</span>')+(b.paid&&b.paid_date?('<div style="font-size:8px;color:var(--text3);margin-top:2px">'+U.fmtDate(b.paid_date)+'</div>'):'')+'</td>'
       +'<td class="r">'+(function(){
-        var src=b.meter_photo_rel||''; if(!src) return dash;
+        var src=_photoFor(b, _meterById); if(!src) return dash;
         return '<a href="#" onclick="pubViewMedia(this.getAttribute(\'data-src\'),event);return false;" data-src="'+U.esc(src)+'" title="'+U.esc(src)+'"><i class="fa-solid fa-camera text-primary"></i></a>';
       })()+'</td>'
       +'</tr>';
