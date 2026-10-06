@@ -121,7 +121,7 @@ function renderPubReport(){
   var tbl=sorted.length?('<div class="table-scroll">'+head+'</div>'):'<p class="text-muted" style="padding:10px">\u0e22\u0e31\u0e07\u0e44\u0e21\u0e48\u0e21\u0e35\u0e1a\u0e34\u0e25\u0e43\u0e19\u0e1b\u0e35\u0e19\u0e35\u0e49</p>';
   var genNote = D.generated_at ? ('<div style="font-size:10px;color:var(--text3);text-align:right">\u0e02\u0e49\u0e2d\u0e21\u0e39\u0e25 \u0e13 '+U.esc(String(D.generated_at).slice(0,10))+'</div>') : '';
   el.innerHTML='<div class="card">'
-    +'<h2><i class="fa-solid fa-users"></i> \u0e2a\u0e23\u0e38\u0e1b\u0e2a\u0e48\u0e27\u0e19\u0e01\u0e25\u0e32\u0e07 (\u0e2a\u0e33\u0e2b\u0e23\u0e31\u0e1a\u0e25\u0e39\u0e01\u0e1a\u0e49\u0e32\u0e19)'+(D.estate_name?(' \u2014 '+U.esc(D.estate_name)):'')+'</h2>'
+    +'<h2><i class="fa-solid fa-users"></i> \u0e2a\u0e23\u0e38\u0e1b\u0e2a\u0e48\u0e27\u0e19\u0e01\u0e25\u0e32\u0e07 (\u0e2a\u0e33\u0e2b\u0e23\u0e31\u0e1a\u0e25\u0e39\u0e01\u0e1a\u0e49\u0e32\u0e19)'+(D.estate_name?(' \u2014 '+U.esc(D.estate_name)):'')+'</h2>'+'<div id="pub-live" style="font-size:10px;color:var(--text3);margin:-6px 0 8px"></div>'
     +'<p class="text-muted" style="font-size:12px;margin:-4px 0 10px">\u0e2b\u0e19\u0e49\u0e32\u0e19\u0e35\u0e49\u0e41\u0e2a\u0e14\u0e07\u0e04\u0e48\u0e32\u0e2a\u0e48\u0e27\u0e19\u0e01\u0e25\u0e32\u0e07\u0e02\u0e2d\u0e07\u0e2b\u0e21\u0e39\u0e48\u0e1a\u0e49\u0e32\u0e19 \u0e27\u0e48\u0e32\u0e41\u0e15\u0e48\u0e25\u0e30\u0e07\u0e27\u0e14\u0e04\u0e34\u0e14\u0e2d\u0e22\u0e48\u0e32\u0e07\u0e44\u0e23 \u0e23\u0e27\u0e21\u0e40\u0e17\u0e48\u0e32\u0e44\u0e23</p>'
     +genNote
     +'<div style="display:flex;gap:8px;align-items:center;margin-bottom:12px"><label class="text-muted" style="font-size:12px">\u0e1b\u0e35:</label><select class="inp" style="max-width:120px" onchange="setPubYear(this.value)">'+yearOpts+'</select></div>'
@@ -209,5 +209,34 @@ window.setPubSort=setPubSort;
 window.pubToggle=pubToggle;
 window.pubViewMedia=pubViewMedia;
 window.pubCloseMedia=pubCloseMedia;
-document.addEventListener('DOMContentLoaded', function(){ try{ renderPubReport(); }catch(e){ var el=document.getElementById('pub-root'); if(el) el.innerHTML='<div class="card"><p class="text-muted">\u0e42\u0e2b\u0e25\u0e14\u0e02\u0e49\u0e2d\u0e21\u0e39\u0e25\u0e44\u0e21\u0e48\u0e2a\u0e33\u0e40\u0e23\u0e47\u0e08: '+(e&&e.message?e.message:e)+'</p></div>'; } });
+/* ---- Live data from the Google Sheet (public, token-free, whitelisted fields only) ----
+   Page renders instantly from villageman_data.js, then swaps in the live Sheet data.
+   meter_photo_rel is NOT in the Sheet (repo layout) -> carried over from the snapshot per bill id.
+   Set PUBLIC_ENDPOINT to '' to disable and use the snapshot only. */
+var PUBLIC_ENDPOINT='https://script.google.com/macros/s/AKfycbyvisOSzAf_9VZJFhdKgqo0rKuazq0T33XhDb0x3HJSEoB2uE8z07irgxsUB_DeRMYN/exec';
+var ISO_RE=/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?Z$/;
+function _fixDate(v,key){ if(typeof v!=='string'||!ISO_RE.test(v)) return v; var s=new Date(new Date(v).getTime()+7*3600*1000).toISOString(); return /period/i.test(key)?s.slice(0,7):s.slice(0,10); }
+function _fixAll(arr){ (arr||[]).forEach(function(o){ Object.keys(o).forEach(function(k){ o[k]=_fixDate(o[k],k); }); }); return arr; }
+function _mergeLive(live){
+  var snap=_data(), photo={};
+  (snap.utility_bills||[]).forEach(function(b){ if(b.meter_photo_rel) photo[b.id]=b.meter_photo_rel; });
+  _fixAll(live.meters); _fixAll(live.utility_bills);
+  (live.utility_bills||[]).forEach(function(b){ if(photo[b.id]) b.meter_photo_rel=photo[b.id]; });
+  live._source='sheet';
+  return live;
+}
+function _liveStatus(txt){ var el=document.getElementById('pub-live'); if(el) el.textContent=txt; }
+function _loadLive(){
+  if(!PUBLIC_ENDPOINT || typeof fetch!=='function') return;
+  _liveStatus('\u21bb \u0e01\u0e33\u0e25\u0e31\u0e07\u0e42\u0e2b\u0e25\u0e14\u0e02\u0e49\u0e2d\u0e21\u0e39\u0e25\u0e25\u0e48\u0e32\u0e2a\u0e38\u0e14\u2026');
+  fetch(PUBLIC_ENDPOINT+'?action=public&t='+Date.now()).then(function(r){ return r.json(); }).then(function(res){
+    if(!res||!res.ok||!res.data||!Array.isArray(res.data.utility_bills)) throw new Error((res&&res.error)||'bad response');
+    window.VILLAGEMAN_DATA=_mergeLive(res.data);
+    renderPubReport();
+    _liveStatus('\u2713 \u0e02\u0e49\u0e2d\u0e21\u0e39\u0e25\u0e25\u0e48\u0e32\u0e2a\u0e38\u0e14');
+  }).catch(function(e){ console.warn('live data failed, showing snapshot:',e); _liveStatus(''); });
+}
+window._vmpMergeLive=_mergeLive;
+
+document.addEventListener('DOMContentLoaded', function(){ try{ renderPubReport(); _loadLive(); }catch(e){ var el=document.getElementById('pub-root'); if(el) el.innerHTML='<div class="card"><p class="text-muted">\u0e42\u0e2b\u0e25\u0e14\u0e02\u0e49\u0e2d\u0e21\u0e39\u0e25\u0e44\u0e21\u0e48\u0e2a\u0e33\u0e40\u0e23\u0e47\u0e08: '+(e&&e.message?e.message:e)+'</p></div>'; } });
 })();
