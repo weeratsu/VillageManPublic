@@ -14,7 +14,8 @@ VillageManPublic/
 |- js/
 |   \- pubreport.js        <- report code
 |- scripts/
-|   \- copy_photos_to_public.py   <- copies meter photos into this repo
+|   |- copy_photos_to_public.py   <- copies meter photos into this repo
+|   \- update_public.bat          <- one-click: copy photos + git commit/push
 |- meter-photos/          <- meter photos (filled by the script)
 |- images/                <- app icons / favicons
 \- README.md
@@ -30,7 +31,7 @@ VillageManPublic/
 1. Open the **VillageMan** app on your PC -> **Common-area Summary** page.
 2. Click **"Export for web"** -> downloads `villageman_data.js`.
 3. Replace this repo's `villageman_data.js` (at the repo root) with the downloaded file.
-4. Double-click **`update_public.bat`** -> copies the referenced meter photos into
+4. Double-click **`scripts\update_public.bat`** -> copies the referenced meter photos into
    `meter-photos/`, then commits & pushes to GitHub automatically.
    (Or do it by hand: `python scripts/copy_photos_to_public.py` then commit & push.)
 5. GitHub Pages updates in ~1 minute.

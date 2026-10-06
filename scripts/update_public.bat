@@ -5,7 +5,7 @@ REM  One-click: copy meter photos into this repo, then push to GitHub.
 REM  Run AFTER you press "Export for web" in the VillageMan app and
 REM  replace villageman_data.js in this folder.
 REM ============================================================
-cd /d "%~dp0"
+cd /d "%~dp0.."
 
 REM ---- Locate git.exe --------------------------------------------------
 REM Order: (1) git already on PATH, (2) git bundled inside GitHub Desktop,
@@ -61,8 +61,8 @@ echo   The public site will refresh in about a minute:
 echo   https://weeratsu.github.io/VillageManPublic/
 echo ============================================================
 echo.
-echo Press any key to close...
-pause >nul
+echo Closing in 3 seconds...
+timeout /t 3 >nul
 goto :eof
 
 :done
@@ -71,8 +71,8 @@ echo ============================================================
 echo   [OK] Already up to date - nothing new to push.
 echo ============================================================
 echo.
-echo Press any key to close...
-pause >nul
+echo Closing in 3 seconds...
+timeout /t 3 >nul
 goto :eof
 
 :nogit
