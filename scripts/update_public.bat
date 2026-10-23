@@ -1,4 +1,17 @@
 @echo off
+REM ---- v4 (Oct 23 2026): wait for G: (Google Drive) to mount before doing anything, so a
+REM     background scheduled run that fires before Drive is ready doesn't fail on missing files.
+set "_gtry=0"
+:waitG
+if exist "G:\" goto :gok
+set /a _gtry+=1
+if %_gtry% geq 18 (
+  echo [%DATE% %TIME%] G: (Google Drive) not mounted - photos NOT published>>"%~dp0gmount_log.txt"
+  exit /b 0
+)
+ping -n 6 127.0.0.1 >nul
+goto :waitG
+:gok
 REM ============================================================
 REM  update_public.bat  (VillageManPublic)
 REM  One-click: copy meter photos into this repo, then push to GitHub.
