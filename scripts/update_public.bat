@@ -49,7 +49,7 @@ echo Using git: %GIT%
 
 echo.
 echo [1/3] Copying meter photos + photo index into the repo...
-python scripts\copy_photos_to_public.py
+if exist "C:\Users\USER\AppData\Local\Python\pythoncore-3.14-64\python.exe" ( "C:\Users\USER\AppData\Local\Python\pythoncore-3.14-64\python.exe" scripts\copy_photos_to_public.py ) else ( where python >nul 2>nul && (python scripts\copy_photos_to_public.py) || (py scripts\copy_photos_to_public.py) )
 if errorlevel 1 goto :error
 
 echo.
@@ -76,7 +76,7 @@ echo   https://weeratsu.github.io/VillageManPublic/
 echo ============================================================
 echo.
 echo Closing in 3 seconds...
-timeout /t 3 >nul
+ping -n 4 127.0.0.1 >nul
 goto :eof
 
 :done
@@ -86,7 +86,7 @@ echo   [OK] Already up to date - nothing new to push.
 echo ============================================================
 echo.
 echo Closing in 3 seconds...
-timeout /t 3 >nul
+ping -n 4 127.0.0.1 >nul
 goto :eof
 
 :nogit
@@ -101,7 +101,7 @@ echo   (choose "Git from the command line..."), OR open GitHub Desktop
 echo   and push from there instead.
 echo ============================================================
 echo.
-pause
+ping -n 3 127.0.0.1 >nul
 goto :eof
 
 :pushfail
@@ -115,7 +115,7 @@ echo   Try: open GitHub Desktop and push from there, or run
 echo        'git push' manually to see the full error.
 echo ============================================================
 echo.
-pause
+ping -n 3 127.0.0.1 >nul
 goto :eof
 
 :error
@@ -127,4 +127,5 @@ echo   Common causes: not a git repo yet, Python not installed,
 echo   or the VillageMan\meter-photos folder was not found.
 echo ============================================================
 echo.
-pause
+ping -n 3 127.0.0.1 >nul
+exit /b 0
