@@ -32,23 +32,44 @@ function _pubSortVal(b,col){
 function setPubSort(col){ if(_pubSort===col){ _pubAsc=!_pubAsc; } else { _pubSort=col; _pubAsc=true; } renderPubReport(); }
 function _pubArrow(col){ if(_pubSort!==col) return ''; return _pubAsc?' \u25b2':' \u25bc'; }
 
+function _pubSmooth(p){
+  var d='M'+p[0][0].toFixed(1)+','+p[0][1].toFixed(1);
+  for(var i=0;i<p.length-1;i++){ var a=p[i-1]||p[i], b=p[i], c=p[i+1], e=p[i+2]||c;
+    d+=' C'+(b[0]+(c[0]-a[0])/6).toFixed(1)+','+(b[1]+(c[1]-a[1])/6).toFixed(1)+' '+(c[0]-(e[0]-b[0])/6).toFixed(1)+','+(c[1]-(e[1]-b[1])/6).toFixed(1)+' '+c[0].toFixed(1)+','+c[1].toFixed(1); }
+  return d;
+}
 function _pubMonthlyCostChart(bills){
   var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   var vals=[]; for(var i=0;i<12;i++) vals.push(0);
   (bills||[]).forEach(function(b){ var pp=(b.period||'').split('-'); if(pp.length<2) return; var mi=parseInt(pp[1],10)-1; if(mi<0||mi>11) return; vals[mi]+=b.split_meter?(Number(b.central_amount)||0):(Number(b.total_amount)||0); });
-  var max=Math.max.apply(null, vals.concat([1]));
-  var W=640,H=170,padT=12,padB=22,padL=8,padR=8,n=12,bw=(W-padL-padR)/n,bars='';
-  var maxIdx=-1,maxV=-1; for(var k=0;k<12;k++){ if(vals[k]>maxV){maxV=vals[k];maxIdx=k;} }
-  for(var j=0;j<n;j++){
-    var v=vals[j], bh=max>0?(v/max)*(H-padT-padB):0, x=padL+j*bw+bw*0.15, y=H-padB-bh, w=bw*0.7;
-    var fill=(j===maxIdx&&v>0)?'var(--error)':'var(--primary-bg)', stroke=(j===maxIdx&&v>0)?'var(--error)':'var(--border2)';
-    bars+='<rect x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+w.toFixed(1)+'" height="'+Math.max(0,bh).toFixed(1)+'" rx="2" fill="'+fill+'" stroke="'+stroke+'"><title>'+MON[j]+': '+U.fmtMoney(v)+'</title></rect>';
-    if(v>0){ bars+='<text x="'+(x+w/2).toFixed(1)+'" y="'+(y-2).toFixed(1)+'" text-anchor="middle" font-size="7" fill="var(--text3)">'+Math.round(v)+'</text>'; }
-    bars+='<text x="'+(x+w/2).toFixed(1)+'" y="'+(H-padB+10)+'" text-anchor="middle" font-size="8" fill="var(--text3)">'+MON[j]+'</text>';
+  var W=640,H=190,padT=22,padB=24,padL=10,padR=10,n=12,bw=(W-padL-padR)/n,h=H-padT-padB;
+  var max=Math.max.apply(null, vals.concat([1]))*1.12;
+  var X=function(k){ return padL+k*bw+bw/2; }, Y=function(v){ return H-padB-(v/max)*h; };
+  var pts=[]; for(var k=0;k<n;k++){ if(vals[k]>0) pts.push([X(k),Y(vals[k]),vals[k],k]); }
+  var out='<defs><linearGradient id="pubArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--primary)" stop-opacity=".28"/><stop offset="100%" stop-color="var(--primary)" stop-opacity="0"/></linearGradient></defs>';
+  for(var g=0;g<=3;g++){ var gy=padT+h*g/3; out+='<line x1="'+padL+'" x2="'+(W-padR)+'" y1="'+gy.toFixed(1)+'" y2="'+gy.toFixed(1)+'" stroke="var(--border)" stroke-width=".6"/>'; }
+  for(var m=0;m<n;m++) out+='<text x="'+X(m).toFixed(1)+'" y="'+(H-padB+14)+'" text-anchor="middle" font-size="8" fill="var(--text3)">'+MON[m]+'</text>';
+  if(pts.length){
+    var avg=pts.reduce(function(s,p){return s+p[2];},0)/pts.length, ay=Y(avg);
+    if(pts.length>1){
+      var line=_pubSmooth(pts);
+      out+='<path d="'+line+' L'+pts[pts.length-1][0].toFixed(1)+','+(H-padB)+' L'+pts[0][0].toFixed(1)+','+(H-padB)+' Z" fill="url(#pubArea)"/>';
+      out+='<path d="'+line+'" fill="none" stroke="var(--primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>';
+    }
+    out+='<line x1="'+padL+'" x2="'+(W-padR)+'" y1="'+ay.toFixed(1)+'" y2="'+ay.toFixed(1)+'" stroke="var(--error)" stroke-width="1.2" stroke-dasharray="5 4"/>';
+    out+='<rect x="'+(W-padR-118)+'" y="'+(ay-15).toFixed(1)+'" width="118" height="13" rx="6" fill="var(--error)" opacity=".12"/>';
+    out+='<text x="'+(W-padR-6)+'" y="'+(ay-5.5).toFixed(1)+'" text-anchor="end" font-size="8" font-weight="700" fill="var(--error)">\u0e40\u0e09\u0e25\u0e35\u0e48\u0e22 '+U.fmtMoney(avg)+'</text>';
+    var mx=pts.reduce(function(a,p){return p[2]>a[2]?p:a;},pts[0]);
+    pts.forEach(function(p){
+      var top=p===mx;
+      out+='<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="'+(top?4.5:3.5)+'" fill="var(--bg2,#fff)" stroke="'+(top?'var(--error)':'var(--primary)')+'" stroke-width="2"><title>'+MON[p[3]]+': '+U.fmtMoney(p[2])+'</title></circle>';
+      out+='<text x="'+p[0].toFixed(1)+'" y="'+(p[1]-8).toFixed(1)+'" text-anchor="middle" font-size="8" font-weight="600" fill="'+(top?'var(--error)':'var(--text2)')+'">'+Math.round(p[2]).toLocaleString('en-US')+'</text>';
+    });
+  } else {
+    out+='<text x="'+(W/2)+'" y="'+(H/2)+'" text-anchor="middle" font-size="10" fill="var(--text3)">-</text>';
   }
-  return '<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:auto;display:block" preserveAspectRatio="xMidYMid meet">'+bars+'</svg>';
+  return '<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:auto;display:block" preserveAspectRatio="xMidYMid meet">'+out+'</svg>';
 }
-
 function _calcSteps(b){
   var mainUnits=Number(b.units_used)||0, cu=Number(b.central_units)||0;
   var ce=(b.central_energy!=null)?Number(b.central_energy):null, cf=(b.central_ft!=null)?Number(b.central_ft):null, cv=(b.central_vat!=null)?Number(b.central_vat):null;
@@ -124,7 +145,7 @@ function renderPubReport(){
     if(isSplit){
       r+='<tr class="pub-detail" id="pd-'+b.id+'" style="display:none;background:var(--bg2)"><td colspan="11" style="padding:10px 14px;font-size:11px;line-height:1.6">'
         +'<div style="font-weight:700;margin-bottom:4px"><i class="fa-solid fa-calculator"></i> \u0e27\u0e34\u0e18\u0e35\u0e04\u0e34\u0e14\u0e22\u0e2d\u0e14\u0e2a\u0e48\u0e27\u0e19\u0e01\u0e25\u0e32\u0e07 ('+U.esc(b.period||'')+')</div>'
-        +'<div style="max-width:460px">'+_calcSteps(b)+'</div>'
+        +(b.central_date?'<div style="margin-bottom:4px;font-size:10px;color:var(--text2)"><i class="fa-solid fa-calendar-day"></i> \u0e27\u0e31\u0e19\u0e17\u0e35\u0e48\u0e08\u0e14\u0e21\u0e34\u0e40\u0e15\u0e2d\u0e23\u0e4c\u0e2a\u0e48\u0e27\u0e19\u0e01\u0e25\u0e32\u0e07: <b>'+U.fmtDate(b.central_date)+'</b></div>':'')++'<div style="max-width:460px">'+_calcSteps(b)+'</div>'
         +'<div style="margin-top:6px;font-size:10px;color:var(--text3)">\u0e2b\u0e19\u0e48\u0e27\u0e22\u0e23\u0e27\u0e21\u0e17\u0e31\u0e49\u0e07\u0e1a\u0e34\u0e25 '+Math.round(Number(b.units_used)||0)+' \u2014 \u0e2a\u0e48\u0e27\u0e19\u0e01\u0e25\u0e32\u0e07 '+Math.round(Number(b.central_units)||0)+' / \u0e1a\u0e49\u0e32\u0e19 '+Math.round(Number(b.home_units)||0)+'</div>'
         +'</td></tr>';
     }
