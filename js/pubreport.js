@@ -111,6 +111,14 @@ function renderPubReport(){
   var meters=D.meters||[];
   var _meterById={}; meters.forEach(function(m){ _meterById[m.id]=m; });
   function _meterNo(b){ if(b&&b.central_meter_no) return b.central_meter_no; var m=_meterById[b.meter_id]; if(!m) return '-'; return m.installation||m.meter_no||m.ca_no||'-'; }
+  function _prevPeriod(p){ var a=String(p||'').split('-'); var y=+a[0], m=+a[1]-1; if(m<1){m=12;y--;} return y+'-'+(m<10?'0':'')+m; }
+  function _startDate(b){
+    var pp=_prevPeriod(b.period), pb=(D.utility_bills||[]).filter(function(x){ return x.meter_id===b.meter_id && x.period===pp && x.central_date; })[0];
+    if(pb) return U.fmtDate(pb.central_date);
+    var idx=window.VM_PHOTO_INDEX||{}, no=String(_meterNo(b)), cat=(String(b.utility_type||'').indexOf('w')===0)?'water':'electricity';
+    var e=idx[cat+'/'+pp.split('-')[0]+'/'+no+'_'+pp];
+    return (e&&e.file)?_dateFromName(e.file):'';
+  }
   var bills=(D.utility_bills||[]).filter(function(b){ if(b.home_only) return false; var y=(b.period||'').split('-')[0]; return parseInt(y,10)===_pubYear; });
   var ys={}; (D.utility_bills||[]).forEach(function(b){ var y=(b.period||'').split('-')[0]; if(y) ys[y]=1; }); ys[String(_pubYear)]=1; ys[String(new Date().getFullYear())]=1;
   var yearList=Object.keys(ys).sort(function(a,b){return b-a;});
@@ -145,7 +153,7 @@ function renderPubReport(){
     if(isSplit){
       r+='<tr class="pub-detail" id="pd-'+b.id+'" style="display:none;background:var(--bg2)"><td colspan="11" style="padding:10px 14px;font-size:11px;line-height:1.6">'
         +'<div style="font-weight:700;margin-bottom:4px"><i class="fa-solid fa-calculator"></i> \u0e27\u0e34\u0e18\u0e35\u0e04\u0e34\u0e14\u0e22\u0e2d\u0e14\u0e2a\u0e48\u0e27\u0e19\u0e01\u0e25\u0e32\u0e07 ('+U.esc(b.period||'')+')</div>'
-        +(b.central_date?'<div style="margin-bottom:4px;font-size:10px;color:var(--text2)"><i class="fa-solid fa-calendar-day"></i> \u0e27\u0e31\u0e19\u0e17\u0e35\u0e48\u0e08\u0e14\u0e21\u0e34\u0e40\u0e15\u0e2d\u0e23\u0e4c\u0e2a\u0e48\u0e27\u0e19\u0e01\u0e25\u0e32\u0e07: <b>'+U.fmtDate(b.central_date)+'</b></div>':'')+'<div style="max-width:460px">'+_calcSteps(b)+'</div>'
+        +(b.central_date?'<div style="margin-bottom:4px;font-size:10px;color:var(--text2)"><i class="fa-solid fa-calendar-day"></i> \u0e23\u0e2d\u0e1a\u0e01\u0e32\u0e23\u0e43\u0e0a\u0e49\u0e44\u0e1f: <b>'+(function(){ var s=_startDate(b), e=U.fmtDate(b.central_date); if(!s) return e; var pa=s.split('/'), pe=e.split('/'); var d=Math.round((new Date(+pe[2],+pe[1]-1,+pe[0])-new Date(+pa[2],+pa[1]-1,+pa[0]))/864e5); return s+' - '+e+(d>0?' ('+d+' \u0e27\u0e31\u0e19)':''); })()+'</b></div>':'')+'<div style="max-width:460px">'+_calcSteps(b)+'</div>'
         +'<div style="margin-top:6px;font-size:10px;color:var(--text3)">\u0e2b\u0e19\u0e48\u0e27\u0e22\u0e23\u0e27\u0e21\u0e17\u0e31\u0e49\u0e07\u0e1a\u0e34\u0e25 '+Math.round(Number(b.units_used)||0)+' \u2014 \u0e2a\u0e48\u0e27\u0e19\u0e01\u0e25\u0e32\u0e07 '+Math.round(Number(b.central_units)||0)+' / \u0e1a\u0e49\u0e32\u0e19 '+Math.round(Number(b.home_units)||0)+'</div>'
         +'</td></tr>';
     }
