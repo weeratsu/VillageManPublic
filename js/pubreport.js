@@ -119,6 +119,7 @@ function renderPubReport(){
     var e=idx[cat+'/'+pp.split('-')[0]+'/'+no+'_'+pp];
     return (e&&e.file)?_dateFromName(e.file):'';
   }
+  function _days(b){ var s=_startDate(b), e=b.central_date?U.fmtDate(b.central_date):''; if(!s||!e) return 0; var pa=s.split('/'), pe=e.split('/'); return Math.round((new Date(+pe[2],+pe[1]-1,+pe[0])-new Date(+pa[2],+pa[1]-1,+pa[0]))/864e5); }
   var bills=(D.utility_bills||[]).filter(function(b){ if(b.home_only) return false; var y=(b.period||'').split('-')[0]; return parseInt(y,10)===_pubYear; });
   var ys={}; (D.utility_bills||[]).forEach(function(b){ var y=(b.period||'').split('-')[0]; if(y) ys[y]=1; }); ys[String(_pubYear)]=1; ys[String(new Date().getFullYear())]=1;
   var yearList=Object.keys(ys).sort(function(a,b){return b-a;});
@@ -140,7 +141,7 @@ function renderPubReport(){
     var meterNo=U.esc(_meterNo(b)), dash='<span class="text-muted">-</span>';
     var expBtn=isSplit?('<button class="lnk" title="\u0e14\u0e39\u0e27\u0e34\u0e18\u0e35\u0e04\u0e34\u0e14" onclick="pubToggle(\''+b.id+'\')"><i class="fa-solid fa-caret-right" id="pc-'+b.id+'"></i></button> '):'';
     var r='<tr>'
-      +'<td>'+expBtn+U.esc(b.period||'-')+'</td><td>'+typ+'</td><td>'+meterNo+'</td>'
+      +'<td>'+expBtn+U.esc(b.period||'-')+(function(){ var d=_days(b); return d>0?' <span style="font-size:10px;color:var(--text3)">('+d+' \u0e27\u0e31\u0e19)</span>':''; })()+'</td><td>'+typ+'</td><td>'+meterNo+'</td>'
       +'<td class="r">'+Math.round(prev)+'</td><td class="r">'+Math.round(pres)+'</td><td class="r">'+Math.round(units)+'</td>'
       +'<td class="r">'+(energy!=null?U.fmtMoney(energy):dash)+'</td><td class="r">'+(vat!=null?U.fmtMoney(vat):dash)+'</td>'
       +'<td class="r"><b>'+U.fmtMoney(central)+'</b></td>'
