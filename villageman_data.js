@@ -1,5 +1,5 @@
 window.VILLAGEMAN_DATA = {
- "generated_at": "2026-11-05T04:39:10.072Z",
+ "generated_at": "2026-11-05T04:44:03.928Z",
  "estate_name": "Cluster Haus",
  "meters": [
   {
