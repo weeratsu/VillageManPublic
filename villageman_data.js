@@ -1,5 +1,5 @@
 window.VILLAGEMAN_DATA = {
- "generated_at": "2026-11-04T11:21:05.696Z",
+ "generated_at": "2026-11-05T04:39:10.072Z",
  "estate_name": "Cluster Haus",
  "meters": [
   {
@@ -2937,9 +2937,9 @@ window.VILLAGEMAN_DATA = {
    "energy_charge": 2852.49,
    "vat": 209.65,
    "total_amount": 634.77,
-   "paid": false,
-   "paid_date": "",
-   "due_date": "2026-12-14",
+   "paid": true,
+   "paid_date": "2026-11-03",
+   "due_date": "2027-01-04",
    "split_meter": true,
    "home_only": false,
    "bill_total": 3204.59,
