@@ -81,7 +81,7 @@ function _calcSteps(b){
   h+=S(2,'= \u0e23\u0e32\u0e04\u0e32\u0e15\u0e48\u0e2d\u0e2b\u0e19\u0e48\u0e27\u0e22', (ratePerUnit!=null?U.fmtMoney(ratePerUnit):dash));
   var ftRate=(cf!=null && cu>0)?(cf/cu):null;
   var preVat=((ce!=null?ce:0)+(cf!=null?cf:0));
-  h+=S(3,'\u00d7 \u0e2b\u0e19\u0e48\u0e27\u0e22\u0e2a\u0e48\u0e27\u0e19\u0e01\u0e25\u0e32\u0e07 ('+Math.round(cu)+')', (ce!=null?('<span class="text-muted" style="font-size:10px">('+(ratePerUnit!=null?U.fmtMoney(ratePerUnit):dash)+' \u00d7 '+Math.round(cu)+') = </span>'+U.fmtMoney(ce)):dash));
+  h+=S(3,'\u00d7 \u0e2b\u0e19\u0e48\u0e27\u0e22\u0e2a\u0e48\u0e27\u0e19\u0e01\u0e25\u0e32\u0e07 ('+Math.round(cu)+')'+((b._days>0&&cu>0)?' <span style="font-size:10px;color:var(--text3)">&middot; '+b._days+' \u0e27\u0e31\u0e19 &middot; \u0e40\u0e09\u0e25\u0e35\u0e48\u0e22 '+(cu/b._days).toFixed(1)+' \u0e2b\u0e19\u0e48\u0e27\u0e22/\u0e27\u0e31\u0e19</span>':''), (ce!=null?('<span class="text-muted" style="font-size:10px">('+(ratePerUnit!=null?U.fmtMoney(ratePerUnit):dash)+' \u00d7 '+Math.round(cu)+') = </span>'+U.fmtMoney(ce)):dash));
   h+=S(4,'+ Ft (\u0e2a\u0e48\u0e27\u0e19\u0e01\u0e25\u0e32\u0e07)', (cf!=null?('<span class="text-muted" style="font-size:10px">('+(ftRate!=null?U.fmtRate(ftRate):dash)+' \u00d7 '+Math.round(cu)+') = </span>'+U.fmtMoney(cf)):dash));
   h+=S(5,'+ VAT 7%', (cv!=null?('<span class="text-muted" style="font-size:10px">('+U.fmtMoney(preVat)+' \u00d7 7%) = </span>'+U.fmtMoney(cv)):dash));
   h+=S(6,'<b>= \u0e22\u0e2d\u0e14\u0e04\u0e48\u0e32\u0e44\u0e1f\u0e2a\u0e48\u0e27\u0e19\u0e01\u0e25\u0e32\u0e07\u0e17\u0e35\u0e48\u0e15\u0e49\u0e2d\u0e07\u0e40\u0e01\u0e47\u0e1a</b>', '<b>'+U.fmtMoney(ca)+'</b>');
@@ -145,7 +145,7 @@ function renderPubReport(){
       +'<td class="r">'+Math.round(prev)+'</td><td class="r">'+Math.round(pres)+'</td><td class="r">'+Math.round(units)+'</td>'
       +'<td class="r">'+(energy!=null?U.fmtMoney(energy):dash)+'</td><td class="r">'+(vat!=null?U.fmtMoney(vat):dash)+'</td>'
       +'<td class="r"><b>'+U.fmtMoney(central)+'</b></td>'
-      +'<td class="r">'+(b.paid?'<span class="tag tag-active">\u0e08\u0e48\u0e32\u0e22\u0e41\u0e25\u0e49\u0e27</span>':'<span class="tag tag-planned">\u0e22\u0e31\u0e07\u0e44\u0e21\u0e48\u0e08\u0e48\u0e32\u0e22</span>')+(b.paid&&b.paid_date?('<div style="font-size:8px;color:var(--text3);margin-top:2px">'+U.fmtDate(b.paid_date)+'</div>'):'')+'</td>'
+      +'<td class="r">'+(b.paid?'<span class="tag tag-active">\u0e08\u0e48\u0e32\u0e22\u0e41\u0e25\u0e49\u0e27</span>':'<span class="tag tag-planned">\u0e22\u0e31\u0e07\u0e44\u0e21\u0e48\u0e08\u0e48\u0e32\u0e22</span>')+(b.paid&&b.paid_date?('<div style="font-size:8px;color:var(--text3);margin-top:2px">'+U.fmtDate(b.paid_date)+'</div>'):'')+(b.paid?(b.reimbursed?'<div style="margin-top:3px"><span class="badge" style="font-size:9px;background:#dcfce7;color:#166534">\u0e40\u0e1a\u0e34\u0e01\u0e41\u0e25\u0e49\u0e27</span>'+(b.reimbursed_date?'<div style="font-size:8px;color:var(--text3)">'+U.fmtDate(b.reimbursed_date)+'</div>':'')+'</div>':'<div style="margin-top:3px"><span class="badge" style="font-size:9px;background:#ffedd5;color:#9a3412">\u0e04\u0e49\u0e32\u0e07\u0e40\u0e1a\u0e34\u0e01</span></div>'):'')+'</td>'
       +'<td class="r">'+(function(){
         var src=_photoFor(b, _meterById); if(!src) return dash;
         return '<a href="#" onclick="pubViewMedia(this.getAttribute(\'data-src\'),event);return false;" data-src="'+U.esc(src)+'" title="'+U.esc(src)+'"><i class="fa-solid fa-camera text-primary"></i></a>';
@@ -154,7 +154,7 @@ function renderPubReport(){
     if(isSplit){
       r+='<tr class="pub-detail" id="pd-'+b.id+'" style="display:none;background:var(--bg2)"><td colspan="11" style="padding:10px 14px;font-size:11px;line-height:1.6">'
         +'<div style="font-weight:700;margin-bottom:4px"><i class="fa-solid fa-calculator"></i> \u0e27\u0e34\u0e18\u0e35\u0e04\u0e34\u0e14\u0e22\u0e2d\u0e14\u0e04\u0e48\u0e32\u0e44\u0e1f\u0e2a\u0e48\u0e27\u0e19\u0e01\u0e25\u0e32\u0e07 ('+U.esc(b.period||'')+')</div>'
-        +(b.central_date?'<div style="margin-bottom:4px;font-size:10px;color:var(--text2)"><i class="fa-solid fa-calendar-day"></i> \u0e23\u0e2d\u0e1a\u0e01\u0e32\u0e23\u0e43\u0e0a\u0e49\u0e44\u0e1f: <b>'+(function(){ var s=_startDate(b), e=U.fmtDate(b.central_date); if(!s) return e; var pa=s.split('/'), pe=e.split('/'); var d=Math.round((new Date(+pe[2],+pe[1]-1,+pe[0])-new Date(+pa[2],+pa[1]-1,+pa[0]))/864e5); return s+' - '+e+(d>0?' ('+d+' \u0e27\u0e31\u0e19)':''); })()+'</b></div>':'')+'<div style="max-width:460px">'+_calcSteps(b)+'</div>'
+        +(b.central_date?'<div style="margin-bottom:4px;font-size:10px;color:var(--text2)"><i class="fa-solid fa-calendar-day"></i> \u0e23\u0e2d\u0e1a\u0e01\u0e32\u0e23\u0e43\u0e0a\u0e49\u0e44\u0e1f: <b>'+(function(){ var s=_startDate(b), e=U.fmtDate(b.central_date); if(!s) return e; var pa=s.split('/'), pe=e.split('/'); var d=Math.round((new Date(+pe[2],+pe[1]-1,+pe[0])-new Date(+pa[2],+pa[1]-1,+pa[0]))/864e5); return s+' - '+e+(d>0?' ('+d+' \u0e27\u0e31\u0e19)':''); })()+'</b></div>':'')+'<div style="max-width:460px">'+_calcSteps((b._days=_days(b),b))+'</div>'
         +'<div style="margin-top:6px;font-size:10px;color:var(--text3)">\u0e2b\u0e19\u0e48\u0e27\u0e22\u0e23\u0e27\u0e21\u0e17\u0e31\u0e49\u0e07\u0e1a\u0e34\u0e25 '+Math.round(Number(b.units_used)||0)+' \u2014 \u0e2a\u0e48\u0e27\u0e19\u0e01\u0e25\u0e32\u0e07 '+Math.round(Number(b.central_units)||0)+' / \u0e1a\u0e49\u0e32\u0e19 '+Math.round(Number(b.home_units)||0)+'</div>'
         +'</td></tr>';
     }
@@ -176,7 +176,7 @@ function renderPubReport(){
       +kpi('\u0e23\u0e27\u0e21\u0e04\u0e48\u0e32\u0e44\u0e1f\u0e2a\u0e48\u0e27\u0e19\u0e01\u0e25\u0e32\u0e07\u0e17\u0e31\u0e49\u0e07\u0e1b\u0e35', U.fmtMoney(totCentral), 'text-error', months+' \u0e07\u0e27\u0e14')
       +kpi('\u0e40\u0e09\u0e25\u0e35\u0e48\u0e22\u0e15\u0e48\u0e2d\u0e40\u0e14\u0e37\u0e2d\u0e19', U.fmtMoney(avg), '', '')
       +kpi('\u0e2b\u0e19\u0e48\u0e27\u0e22\u0e04\u0e48\u0e32\u0e44\u0e1f\u0e2a\u0e48\u0e27\u0e19\u0e01\u0e25\u0e32\u0e07\u0e23\u0e27\u0e21', Math.round(cUnits), '', '')
-      +kpi('\u0e1a\u0e34\u0e25\u0e1e\u0e48\u0e27\u0e07 / \u0e1a\u0e34\u0e25\u0e18\u0e23\u0e23\u0e21\u0e14\u0e32', nSplit+' / '+nFlat, '', '\u0e1a\u0e34\u0e25')
+      +(function(){ var pb=(D.utility_bills||[]).filter(function(b){return !b.home_only&&b.paid&&!b.reimbursed&&(b.split_meter?(Number(b.central_amount)||0):(Number(b.total_amount)||0))>0;}); var s=pb.reduce(function(x,b){return x+(b.split_meter?(Number(b.central_amount)||0):(Number(b.total_amount)||0));},0); return kpi('\u0e22\u0e2d\u0e14\u0e04\u0e49\u0e32\u0e07\u0e40\u0e1a\u0e34\u0e01', U.fmtMoney(s), s>0?'text-warning':'', pb.length+' \u0e07\u0e27\u0e14'); })()
     +'</div>'+tbl+'</div>';
 }
 function pubToggle(id){ var row=document.getElementById('pd-'+id), ic=document.getElementById('pc-'+id); if(!row) return; var open=row.style.display!=='none'; row.style.display=open?'none':''; if(ic) ic.className='fa-solid '+(open?'fa-caret-right':'fa-caret-down'); }
